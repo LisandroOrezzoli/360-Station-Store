@@ -1,0 +1,68 @@
+<div class="ui-g">
+    <p-toast position="top-left"></p-toast>
+    <p-confirmDialog header="Confirmacion" acceptLabel="Si" rejectLabel="No" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-panel header="Administracion de Personas" [style]="{width: '70%', margin: '0 auto' }" >
+        <div style="margin-bottom: 20px">
+            <p-menubar [model]="items"></p-menubar>
+        </div>
+        <p-table [value]="personas" [columns]="cols" [responsive]="true" selectionMode="single" [(selection)]="selectedPersona" dataKey="id" [paginator]="true" [rows]="10"  responsiveLayout="scroll">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascendent order" ></p-sortIcon>
+                    </th>
+                    
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-persona let-columns="columns">
+                <tr [pSelectableRow]="persona">
+                    <td *ngFor="let col of columns">
+                        {{persona[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-panel>
+    <p-dialog header="Persona" [(visible)]="displaySaveDialog" [responsive]="true" [modal]="true">
+        <div class="ui-g ui-fluid"> 
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="nombre" [(ngModel)]="persona.nombre"/>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="apellido">Apellido</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="apellido" [(ngModel)]="persona.apellido"/>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="direccion">Direccion</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="direccion" [(ngModel)]="persona.direccion"/>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="telefono">Telefono</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="telefono" [(ngModel)]="persona.telefono"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button pButton type="button" label="Guardar" icon="fa fa-check" (click)="save()"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>

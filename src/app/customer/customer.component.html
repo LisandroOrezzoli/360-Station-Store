@@ -1,0 +1,92 @@
+<div class="ui-g">
+    <p-toast position="top-left"></p-toast>
+    <p-confirmDialog header="Confirmacion" acceptLabel="Si" rejectLabel="No" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-panel header="Administracion de Clientes" [style]="{width: '70%', margin: '0 auto' }" >
+        <div style="margin-bottom: 20px">
+            <p-menubar [model]="items"></p-menubar>
+        </div>
+        <p-table [value]="customers" [columns]="cols" [responsive]="true" selectionMode="single" [(selection)]="selectedCustomer" dataKey="id" [paginator]="true" [rows]="10"  responsiveLayout="scroll">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascendent order" ></p-sortIcon>
+                    </th>
+                    
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer let-columns="columns">
+                <tr [pSelectableRow]="customer">
+                    <td *ngFor="let col of columns">
+                        {{customer[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-panel>
+    <p-dialog header="Customer" [(visible)]="displaySaveDialog" [responsive]="true" [modal]="true">
+        <div class="ui-g ui-fluid"> 
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="name">Name</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="name" [(ngModel)]="customer.name"/>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="surname">Surname</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="surname" [(ngModel)]="customer.surname"/>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="username">Username</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText required="true" id="username" [(ngModel)]="customer.username"/>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="address">Address</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="address" [(ngModel)]="customer.address"/>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="phone">Phone</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText app-restrict-input="integer" id="phone" [(ngModel)]="customer.phone"/>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="role">Role</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="role" [(ngModel)]="customer.role"/>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g-4">
+                        <label for="status">Status</label>
+                    </div>
+                    <div class="ui-g-8">
+                        <input pInputText id="status" [(ngModel)]="customer.status"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button pButton type="button" label="Guardar" icon="fa fa-check" (click)="save()"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>
